@@ -10,8 +10,9 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
+var path = require('path');
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 3000));
 app.listen(app.get('port'));
 
 app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
@@ -20,10 +21,23 @@ app.use(bodyParser.json());
 var token = process.env.TOKEN || 'token';
 var received_updates = [];
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+app.get('/public/terms', (req, res) => {
+  res.send(`
+    <h1>Documentos de Termos e Política</h1>
+    <ul>
+      <li><a href="/public/terms/Termos_de_Uso_Revelagram.pdf" target="_blank">Termos de Uso - Revelagram</a></li>
+      <li><a href="/public/terms/Politica_de_Privacidade_Revelagram.pdf" target="_blank">Política de Privacidade - Revelagram</a></li>
+    </ul>
+  `);
+});
+
 app.get('/', function(req, res) {
   console.log(req);
   res.send('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
+
 
 app.get(['/facebook', '/instagram', '/threads'], function(req, res) {
   if (
