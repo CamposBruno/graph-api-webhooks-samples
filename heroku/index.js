@@ -12,7 +12,7 @@ var app = express();
 var xhub = require('express-x-hub');
 var path = require('path');
 
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'));
 
 app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
