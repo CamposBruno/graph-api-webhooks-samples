@@ -12,7 +12,8 @@
     "express-x-hub": "^1.0.4"
   },
   "engines": {
-    "node": "0.12.7"
+    "node": "20.11.1",
+    "npm": "10.2.4"
   },
   "repository": {
     "type": "git",
